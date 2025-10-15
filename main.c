@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//hcjgcgchxyxfxhjgcyttc
 extern FILE *yyin;
 extern int yyparse();
 extern int errores;
