@@ -1,0 +1,900 @@
+State 73 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: inicio "void" "id" "(" ")" "{" declarations statement_list "}"
+
+    2 inicio: ε
+
+    3 $@1: ε
+
+    4 declarations: declarations "var" $@1 identifier_list ";"
+
+    5 $@2: ε
+
+    6 declarations: declarations "const" $@2 identifier_list ";"
+    7             | ε
+
+    8 identifier_list: asig
+    9                | identifier_list "," asig
+
+   10 asig: "id"
+   11     | "id" "=" expression
+
+   12 statement_list: statement_list statement
+   13               | ε
+
+   14 statement: "id" "=" expression ";"
+   15          | "{" statement_list "}"
+   16          | "if" "(" expression ")" statement "else" statement
+   17          | "if" "(" expression ")" statement
+   18          | "while" "(" expression ")" statement
+   19          | "print" print_list ";"
+   20          | "read" read_list ";"
+   21          | error ";"
+
+   22 print_list: print_item
+   23           | print_list "," print_item
+
+   24 print_item: expression
+   25           | "string"
+
+   26 read_list: "id"
+   27          | read_list "," "id"
+
+   28 expression: expression "+" expression
+   29           | expression "-" expression
+   30           | expression "*" expression
+   31           | expression "/" expression
+   32           | "-" expression
+   33           | "(" expression ")"
+   34           | "id"
+   35           | "numero"
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256) 21
+    "+" (258) 28
+    "-" (259) 29 32
+    "*" (260) 30
+    "/" (261) 31
+    "(" (262) 1 16 17 18 33
+    ")" (263) 1 16 17 18 33
+    "{" (264) 1 15
+    "}" (265) 1 15
+    ";" (266) 4 6 14 19 20 21
+    "," (267) 9 23 27
+    "numero" <cadena> (268) 35
+    "string" <cadena> (269) 25
+    "=" (270) 11 14
+    "print" (271) 19
+    "read" (272) 20
+    "void" (273) 1
+    "id" <cadena> (274) 1 10 11 14 26 27 34
+    "var" (275) 4
+    "const" (276) 6
+    "if" (277) 16 17
+    "else" (278) 16
+    "while" (279) 18
+    UMINUS (280)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (26)
+        on left: 0
+    program <codigo> (27)
+        on left: 1
+        on right: 0
+    inicio <codigo> (28)
+        on left: 2
+        on right: 1
+    declarations <codigo> (29)
+        on left: 4 6 7
+        on right: 1 4 6
+    $@1 (30)
+        on left: 3
+        on right: 4
+    $@2 (31)
+        on left: 5
+        on right: 6
+    identifier_list <codigo> (32)
+        on left: 8 9
+        on right: 4 6 9
+    asig <codigo> (33)
+        on left: 10 11
+        on right: 8 9
+    statement_list <codigo> (34)
+        on left: 12 13
+        on right: 1 12 15
+    statement <codigo> (35)
+        on left: 14 15 16 17 18 19 20 21
+        on right: 12 16 17 18
+    print_list <codigo> (36)
+        on left: 22 23
+        on right: 19 23
+    print_item <codigo> (37)
+        on left: 24 25
+        on right: 22 23
+    read_list <codigo> (38)
+        on left: 26 27
+        on right: 20 27
+    expression <codigo> (39)
+        on left: 28 29 30 31 32 33 34 35
+        on right: 11 14 16 17 18 24 28 29 30 31 32 33
+
+
+State 0
+
+    0 $accept: • program $end
+
+    $default  reduce using rule 2 (inicio)
+
+    program  go to state 1
+    inicio   go to state 2
+
+
+State 1
+
+    0 $accept: program • $end
+
+    $end  shift, and go to state 3
+
+
+State 2
+
+    1 program: inicio • "void" "id" "(" ")" "{" declarations statement_list "}"
+
+    "void"  shift, and go to state 4
+
+
+State 3
+
+    0 $accept: program $end •
+
+    $default  accept
+
+
+State 4
+
+    1 program: inicio "void" • "id" "(" ")" "{" declarations statement_list "}"
+
+    "id"  shift, and go to state 5
+
+
+State 5
+
+    1 program: inicio "void" "id" • "(" ")" "{" declarations statement_list "}"
+
+    "("  shift, and go to state 6
+
+
+State 6
+
+    1 program: inicio "void" "id" "(" • ")" "{" declarations statement_list "}"
+
+    ")"  shift, and go to state 7
+
+
+State 7
+
+    1 program: inicio "void" "id" "(" ")" • "{" declarations statement_list "}"
+
+    "{"  shift, and go to state 8
+
+
+State 8
+
+    1 program: inicio "void" "id" "(" ")" "{" • declarations statement_list "}"
+
+    $default  reduce using rule 7 (declarations)
+
+    declarations  go to state 9
+
+
+State 9
+
+    1 program: inicio "void" "id" "(" ")" "{" declarations • statement_list "}"
+    4 declarations: declarations • "var" $@1 identifier_list ";"
+    6             | declarations • "const" $@2 identifier_list ";"
+
+    "var"    shift, and go to state 10
+    "const"  shift, and go to state 11
+
+    $default  reduce using rule 13 (statement_list)
+
+    statement_list  go to state 12
+
+
+State 10
+
+    4 declarations: declarations "var" • $@1 identifier_list ";"
+
+    $default  reduce using rule 3 ($@1)
+
+    $@1  go to state 13
+
+
+State 11
+
+    6 declarations: declarations "const" • $@2 identifier_list ";"
+
+    $default  reduce using rule 5 ($@2)
+
+    $@2  go to state 14
+
+
+State 12
+
+    1 program: inicio "void" "id" "(" ")" "{" declarations statement_list • "}"
+   12 statement_list: statement_list • statement
+
+    error    shift, and go to state 15
+    "{"      shift, and go to state 16
+    "}"      shift, and go to state 17
+    "print"  shift, and go to state 18
+    "read"   shift, and go to state 19
+    "id"     shift, and go to state 20
+    "if"     shift, and go to state 21
+    "while"  shift, and go to state 22
+
+    statement  go to state 23
+
+
+State 13
+
+    4 declarations: declarations "var" $@1 • identifier_list ";"
+
+    "id"  shift, and go to state 24
+
+    identifier_list  go to state 25
+    asig             go to state 26
+
+
+State 14
+
+    6 declarations: declarations "const" $@2 • identifier_list ";"
+
+    "id"  shift, and go to state 24
+
+    identifier_list  go to state 27
+    asig             go to state 26
+
+
+State 15
+
+   21 statement: error • ";"
+
+    ";"  shift, and go to state 28
+
+
+State 16
+
+   15 statement: "{" • statement_list "}"
+
+    $default  reduce using rule 13 (statement_list)
+
+    statement_list  go to state 29
+
+
+State 17
+
+    1 program: inicio "void" "id" "(" ")" "{" declarations statement_list "}" •
+
+    $default  reduce using rule 1 (program)
+
+
+State 18
+
+   19 statement: "print" • print_list ";"
+
+    "-"       shift, and go to state 30
+    "("       shift, and go to state 31
+    "numero"  shift, and go to state 32
+    "string"  shift, and go to state 33
+    "id"      shift, and go to state 34
+
+    print_list  go to state 35
+    print_item  go to state 36
+    expression  go to state 37
+
+
+State 19
+
+   20 statement: "read" • read_list ";"
+
+    "id"  shift, and go to state 38
+
+    read_list  go to state 39
+
+
+State 20
+
+   14 statement: "id" • "=" expression ";"
+
+    "="  shift, and go to state 40
+
+
+State 21
+
+   16 statement: "if" • "(" expression ")" statement "else" statement
+   17          | "if" • "(" expression ")" statement
+
+    "("  shift, and go to state 41
+
+
+State 22
+
+   18 statement: "while" • "(" expression ")" statement
+
+    "("  shift, and go to state 42
+
+
+State 23
+
+   12 statement_list: statement_list statement •
+
+    $default  reduce using rule 12 (statement_list)
+
+
+State 24
+
+   10 asig: "id" •
+   11     | "id" • "=" expression
+
+    "="  shift, and go to state 43
+
+    $default  reduce using rule 10 (asig)
+
+
+State 25
+
+    4 declarations: declarations "var" $@1 identifier_list • ";"
+    9 identifier_list: identifier_list • "," asig
+
+    ";"  shift, and go to state 44
+    ","  shift, and go to state 45
+
+
+State 26
+
+    8 identifier_list: asig •
+
+    $default  reduce using rule 8 (identifier_list)
+
+
+State 27
+
+    6 declarations: declarations "const" $@2 identifier_list • ";"
+    9 identifier_list: identifier_list • "," asig
+
+    ";"  shift, and go to state 46
+    ","  shift, and go to state 45
+
+
+State 28
+
+   21 statement: error ";" •
+
+    $default  reduce using rule 21 (statement)
+
+
+State 29
+
+   12 statement_list: statement_list • statement
+   15 statement: "{" statement_list • "}"
+
+    error    shift, and go to state 15
+    "{"      shift, and go to state 16
+    "}"      shift, and go to state 47
+    "print"  shift, and go to state 18
+    "read"   shift, and go to state 19
+    "id"     shift, and go to state 20
+    "if"     shift, and go to state 21
+    "while"  shift, and go to state 22
+
+    statement  go to state 23
+
+
+State 30
+
+   32 expression: "-" • expression
+
+    "-"       shift, and go to state 30
+    "("       shift, and go to state 31
+    "numero"  shift, and go to state 32
+    "id"      shift, and go to state 34
+
+    expression  go to state 48
+
+
+State 31
+
+   33 expression: "(" • expression ")"
+
+    "-"       shift, and go to state 30
+    "("       shift, and go to state 31
+    "numero"  shift, and go to state 32
+    "id"      shift, and go to state 34
+
+    expression  go to state 49
+
+
+State 32
+
+   35 expression: "numero" •
+
+    $default  reduce using rule 35 (expression)
+
+
+State 33
+
+   25 print_item: "string" •
+
+    $default  reduce using rule 25 (print_item)
+
+
+State 34
+
+   34 expression: "id" •
+
+    $default  reduce using rule 34 (expression)
+
+
+State 35
+
+   19 statement: "print" print_list • ";"
+   23 print_list: print_list • "," print_item
+
+    ";"  shift, and go to state 50
+    ","  shift, and go to state 51
+
+
+State 36
+
+   22 print_list: print_item •
+
+    $default  reduce using rule 22 (print_list)
+
+
+State 37
+
+   24 print_item: expression •
+   28 expression: expression • "+" expression
+   29           | expression • "-" expression
+   30           | expression • "*" expression
+   31           | expression • "/" expression
+
+    "+"  shift, and go to state 52
+    "-"  shift, and go to state 53
+    "*"  shift, and go to state 54
+    "/"  shift, and go to state 55
+
+    $default  reduce using rule 24 (print_item)
+
+
+State 38
+
+   26 read_list: "id" •
+
+    $default  reduce using rule 26 (read_list)
+
+
+State 39
+
+   20 statement: "read" read_list • ";"
+   27 read_list: read_list • "," "id"
+
+    ";"  shift, and go to state 56
+    ","  shift, and go to state 57
+
+
+State 40
+
+   14 statement: "id" "=" • expression ";"
+
+    "-"       shift, and go to state 30
+    "("       shift, and go to state 31
+    "numero"  shift, and go to state 32
+    "id"      shift, and go to state 34
+
+    expression  go to state 58
+
+
+State 41
+
+   16 statement: "if" "(" • expression ")" statement "else" statement
+   17          | "if" "(" • expression ")" statement
+
+    "-"       shift, and go to state 30
+    "("       shift, and go to state 31
+    "numero"  shift, and go to state 32
+    "id"      shift, and go to state 34
+
+    expression  go to state 59
+
+
+State 42
+
+   18 statement: "while" "(" • expression ")" statement
+
+    "-"       shift, and go to state 30
+    "("       shift, and go to state 31
+    "numero"  shift, and go to state 32
+    "id"      shift, and go to state 34
+
+    expression  go to state 60
+
+
+State 43
+
+   11 asig: "id" "=" • expression
+
+    "-"       shift, and go to state 30
+    "("       shift, and go to state 31
+    "numero"  shift, and go to state 32
+    "id"      shift, and go to state 34
+
+    expression  go to state 61
+
+
+State 44
+
+    4 declarations: declarations "var" $@1 identifier_list ";" •
+
+    $default  reduce using rule 4 (declarations)
+
+
+State 45
+
+    9 identifier_list: identifier_list "," • asig
+
+    "id"  shift, and go to state 24
+
+    asig  go to state 62
+
+
+State 46
+
+    6 declarations: declarations "const" $@2 identifier_list ";" •
+
+    $default  reduce using rule 6 (declarations)
+
+
+State 47
+
+   15 statement: "{" statement_list "}" •
+
+    $default  reduce using rule 15 (statement)
+
+
+State 48
+
+   28 expression: expression • "+" expression
+   29           | expression • "-" expression
+   30           | expression • "*" expression
+   31           | expression • "/" expression
+   32           | "-" expression •
+
+    $default  reduce using rule 32 (expression)
+
+
+State 49
+
+   28 expression: expression • "+" expression
+   29           | expression • "-" expression
+   30           | expression • "*" expression
+   31           | expression • "/" expression
+   33           | "(" expression • ")"
+
+    "+"  shift, and go to state 52
+    "-"  shift, and go to state 53
+    "*"  shift, and go to state 54
+    "/"  shift, and go to state 55
+    ")"  shift, and go to state 63
+
+
+State 50
+
+   19 statement: "print" print_list ";" •
+
+    $default  reduce using rule 19 (statement)
+
+
+State 51
+
+   23 print_list: print_list "," • print_item
+
+    "-"       shift, and go to state 30
+    "("       shift, and go to state 31
+    "numero"  shift, and go to state 32
+    "string"  shift, and go to state 33
+    "id"      shift, and go to state 34
+
+    print_item  go to state 64
+    expression  go to state 37
+
+
+State 52
+
+   28 expression: expression "+" • expression
+
+    "-"       shift, and go to state 30
+    "("       shift, and go to state 31
+    "numero"  shift, and go to state 32
+    "id"      shift, and go to state 34
+
+    expression  go to state 65
+
+
+State 53
+
+   29 expression: expression "-" • expression
+
+    "-"       shift, and go to state 30
+    "("       shift, and go to state 31
+    "numero"  shift, and go to state 32
+    "id"      shift, and go to state 34
+
+    expression  go to state 66
+
+
+State 54
+
+   30 expression: expression "*" • expression
+
+    "-"       shift, and go to state 30
+    "("       shift, and go to state 31
+    "numero"  shift, and go to state 32
+    "id"      shift, and go to state 34
+
+    expression  go to state 67
+
+
+State 55
+
+   31 expression: expression "/" • expression
+
+    "-"       shift, and go to state 30
+    "("       shift, and go to state 31
+    "numero"  shift, and go to state 32
+    "id"      shift, and go to state 34
+
+    expression  go to state 68
+
+
+State 56
+
+   20 statement: "read" read_list ";" •
+
+    $default  reduce using rule 20 (statement)
+
+
+State 57
+
+   27 read_list: read_list "," • "id"
+
+    "id"  shift, and go to state 69
+
+
+State 58
+
+   14 statement: "id" "=" expression • ";"
+   28 expression: expression • "+" expression
+   29           | expression • "-" expression
+   30           | expression • "*" expression
+   31           | expression • "/" expression
+
+    "+"  shift, and go to state 52
+    "-"  shift, and go to state 53
+    "*"  shift, and go to state 54
+    "/"  shift, and go to state 55
+    ";"  shift, and go to state 70
+
+
+State 59
+
+   16 statement: "if" "(" expression • ")" statement "else" statement
+   17          | "if" "(" expression • ")" statement
+   28 expression: expression • "+" expression
+   29           | expression • "-" expression
+   30           | expression • "*" expression
+   31           | expression • "/" expression
+
+    "+"  shift, and go to state 52
+    "-"  shift, and go to state 53
+    "*"  shift, and go to state 54
+    "/"  shift, and go to state 55
+    ")"  shift, and go to state 71
+
+
+State 60
+
+   18 statement: "while" "(" expression • ")" statement
+   28 expression: expression • "+" expression
+   29           | expression • "-" expression
+   30           | expression • "*" expression
+   31           | expression • "/" expression
+
+    "+"  shift, and go to state 52
+    "-"  shift, and go to state 53
+    "*"  shift, and go to state 54
+    "/"  shift, and go to state 55
+    ")"  shift, and go to state 72
+
+
+State 61
+
+   11 asig: "id" "=" expression •
+   28 expression: expression • "+" expression
+   29           | expression • "-" expression
+   30           | expression • "*" expression
+   31           | expression • "/" expression
+
+    "+"  shift, and go to state 52
+    "-"  shift, and go to state 53
+    "*"  shift, and go to state 54
+    "/"  shift, and go to state 55
+
+    $default  reduce using rule 11 (asig)
+
+
+State 62
+
+    9 identifier_list: identifier_list "," asig •
+
+    $default  reduce using rule 9 (identifier_list)
+
+
+State 63
+
+   33 expression: "(" expression ")" •
+
+    $default  reduce using rule 33 (expression)
+
+
+State 64
+
+   23 print_list: print_list "," print_item •
+
+    $default  reduce using rule 23 (print_list)
+
+
+State 65
+
+   28 expression: expression • "+" expression
+   28           | expression "+" expression •
+   29           | expression • "-" expression
+   30           | expression • "*" expression
+   31           | expression • "/" expression
+
+    "*"  shift, and go to state 54
+    "/"  shift, and go to state 55
+
+    $default  reduce using rule 28 (expression)
+
+
+State 66
+
+   28 expression: expression • "+" expression
+   29           | expression • "-" expression
+   29           | expression "-" expression •
+   30           | expression • "*" expression
+   31           | expression • "/" expression
+
+    "*"  shift, and go to state 54
+    "/"  shift, and go to state 55
+
+    $default  reduce using rule 29 (expression)
+
+
+State 67
+
+   28 expression: expression • "+" expression
+   29           | expression • "-" expression
+   30           | expression • "*" expression
+   30           | expression "*" expression •
+   31           | expression • "/" expression
+
+    $default  reduce using rule 30 (expression)
+
+
+State 68
+
+   28 expression: expression • "+" expression
+   29           | expression • "-" expression
+   30           | expression • "*" expression
+   31           | expression • "/" expression
+   31           | expression "/" expression •
+
+    $default  reduce using rule 31 (expression)
+
+
+State 69
+
+   27 read_list: read_list "," "id" •
+
+    $default  reduce using rule 27 (read_list)
+
+
+State 70
+
+   14 statement: "id" "=" expression ";" •
+
+    $default  reduce using rule 14 (statement)
+
+
+State 71
+
+   16 statement: "if" "(" expression ")" • statement "else" statement
+   17          | "if" "(" expression ")" • statement
+
+    error    shift, and go to state 15
+    "{"      shift, and go to state 16
+    "print"  shift, and go to state 18
+    "read"   shift, and go to state 19
+    "id"     shift, and go to state 20
+    "if"     shift, and go to state 21
+    "while"  shift, and go to state 22
+
+    statement  go to state 73
+
+
+State 72
+
+   18 statement: "while" "(" expression ")" • statement
+
+    error    shift, and go to state 15
+    "{"      shift, and go to state 16
+    "print"  shift, and go to state 18
+    "read"   shift, and go to state 19
+    "id"     shift, and go to state 20
+    "if"     shift, and go to state 21
+    "while"  shift, and go to state 22
+
+    statement  go to state 74
+
+
+State 73
+
+   16 statement: "if" "(" expression ")" statement • "else" statement
+   17          | "if" "(" expression ")" statement •
+
+    "else"  shift, and go to state 75
+
+    "else"    [reduce using rule 17 (statement)]
+    $default  reduce using rule 17 (statement)
+
+
+State 74
+
+   18 statement: "while" "(" expression ")" statement •
+
+    $default  reduce using rule 18 (statement)
+
+
+State 75
+
+   16 statement: "if" "(" expression ")" statement "else" • statement
+
+    error    shift, and go to state 15
+    "{"      shift, and go to state 16
+    "print"  shift, and go to state 18
+    "read"   shift, and go to state 19
+    "id"     shift, and go to state 20
+    "if"     shift, and go to state 21
+    "while"  shift, and go to state 22
+
+    statement  go to state 76
+
+
+State 76
+
+   16 statement: "if" "(" expression ")" statement "else" statement •
+
+    $default  reduce using rule 16 (statement)
